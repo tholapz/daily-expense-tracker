@@ -1,0 +1,140 @@
+Design Document — Personal Daily Expense Tracker (Vite SPA + Firebase)
+
+Owner: Kamol Status: Draft v1 Prod host: https://expense.tholapz.com
+
+------------------------------------------------------------------------
+
+1)  Goals & Non-Goals Goals
+
+-   Track daily expenses with categories, notes, tags, and optional
+    receipt images.
+-   Local-first UX (optimistic updates) with eventual consistency in
+    Firestore.
+-   Private-by-default: each user only sees their own data, enforced in
+    rules.
+-   Fast load & dev iteration using Vite SPA.
+-   Automated tests: unit (Jest), E2E (Playwright).
+-   One-click deploy to Firebase Hosting + custom domain
+    expense.tholapz.com.
+
+------------------------------------------------------------------------
+
+2)  Architecture
+
+[Browser SPA (Vite + React)] <– HTTPS –> [Firebase Hosting CDN] ─
+serves /index.html + assets | │ | Firebase SDK │ v v [Auth
+(Google)] [Cloud Firestore] | | | Rules
+enforcement | Collection-per-user subtrees v v [Emulator Suite in dev/CI]
+
+------------------------------------------------------------------------
+
+3)  Data Model (Firestore)
+
+Collections - users/{uid} — profile (minimal for now). -
+users/{uid}/days/{yyyymmdd} - total: number (stored in THB; multiple of
+100) - updatedAt: timestamp
+
+Indexes - users/{uid}/days ordered by date.
+
+Ownership pattern Store all user data under their users/{uid} subtree to
+make rules straightforward and queries scoped.
+
+------------------------------------------------------------------------
+
+4)  Security Rules (v1)
+
+rules_version = ‘2’; service cloud.firestore { match
+/databases/{db}/documents { function isOwner(uid) { return request.auth
+!= null && request.auth.uid == uid; }
+
+    match /users/{uid} {
+      allow read, write: if isOwner(uid);
+
+      match /days/{docId} {
+        allow create, update: if isOwner(uid)
+          && (request.resource.data.total % 100 == 0)
+          && (request.resource.data.total >= 0)
+          && request.resource.data.total is int;
+        allow read, delete: if isOwner(uid);
+      }
+    }
+
+} }
+
+------------------------------------------------------------------------
+
+5)  Authentication & Views
+
+Authentication:
+-   Email/password authentication with 1+ year session persistence.
+-   Uses Firebase browserLocalPersistence for long-term sessions.
+-   Simple login form without user registration feature.
+
+3-View Architecture:
+-   Login View: Email/password form (shown when no session exists).
+-   Expense Tracker: Mobile-first expense management (default for mobile).
+-   Heatmap View: Desktop-first calendar visualization (default for desktop).
+-   Device Detection: Uses userAgent to determine initial view preference.
+-   View Switching: Manual toggle between Expense and Heatmap views.
+
+------------------------------------------------------------------------
+
+6)  Frontend (Vite SPA)
+
+Stack - Vite + React SPA. - State: lightweight (React Query /
+simple context) for v1. - Env config: use import.meta.env.* and prefix
+client-exposed vars with VITE_* (e.g., VITE_FIREBASE_API_KEY).
+
+Scripts { “scripts”: { “dev”: “vite”, “build”: “vite build”, “preview”:
+“vite preview”, “test”: “jest”, “test:e2e”: “playwright test” } }
+
+UX - Heatmap of daily expenses with shades of green/red. - Counter
+buttons for +100/–100 baht increments. - Savings banner shows cumulative
+savings.
+
+------------------------------------------------------------------------
+
+7)  Testing Strategy
+
+Unit (Jest) - Utilities (currency, date, CSV), simple components.
+
+E2E (Playwright) - webServer config to boot Vite app locally. - Test
+flows: increment/undo, daily total color bins, cumulative savings.
+
+------------------------------------------------------------------------
+
+8)  CI/CD
+
+CI - Node LTS, npm ci. - Run Jest, Playwright. - On main success →
+firebase deploy –only hosting.
+
+Prod deploy 1. firebase init hosting (once) → firebase.json with
+public=dist. 2. npm run build → dist/. 3. firebase deploy –only hosting.
+
+------------------------------------------------------------------------
+
+9)  Custom Domain
+
+-   Add expense.tholapz.com in Firebase Console Hosting.
+-   Update DNS.
+-   Firebase provisions SSL automatically.
+
+------------------------------------------------------------------------
+
+10) firebase.json (SPA rewrite)
+
+{ “hosting”: { “public”: “dist”, “ignore”: [“**/.*“,”/node_modules/”],
+“rewrites”: [{ “source”: “**“,”destination”: “/index.html” }] } }
+
+------------------------------------------------------------------------
+
+11) Performance & Quotas
+
+-   Very low read/write footprint; within Firebase free tier for
+    personal use.
+
+------------------------------------------------------------------------
+
+12) Risks
+
+-   Security rule gaps (test with Emulator).

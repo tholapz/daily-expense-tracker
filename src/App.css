@@ -1,0 +1,644 @@
+.app {
+  min-height: 100vh;
+  background: #ffffff;
+  font-family: 'Geist Mono', monospace;
+  color: #0a0a0a;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.header {
+  background: #fafafa;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.header h1 {
+  color: #0a0a0a;
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+}
+
+.auth-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: #525252;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+.user-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1px solid #e5e5e5;
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-family: 'Geist Mono', monospace;
+  transition: all 0.15s ease;
+  font-weight: 400;
+}
+
+.btn-primary {
+  background: #0a0a0a;
+  color: white;
+  border-color: #0a0a0a;
+}
+
+.btn-primary:hover {
+  background: #262626;
+  border-color: #262626;
+}
+
+.btn-secondary {
+  background: #ffffff;
+  color: #525252;
+  border-color: #e5e5e5;
+}
+
+.btn-secondary:hover {
+  background: #fafafa;
+  border-color: #d4d4d4;
+}
+
+.btn-danger {
+  background: #dc2626;
+  color: white;
+  border-color: #dc2626;
+}
+
+.btn-danger:hover {
+  background: #b91c1c;
+  border-color: #b91c1c;
+}
+
+.expense-form {
+  background: #fafafa;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.simple-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  background: #fafafa;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.add-expense-btn,
+.undo-btn {
+  flex: 1;
+  padding: 1.25rem 2rem;
+  font-size: 1.125rem;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.15s ease;
+  font-family: 'Geist Mono', monospace;
+}
+
+.add-expense-btn {
+  background: #0a0a0a;
+  color: white;
+  border-color: #0a0a0a;
+}
+
+.add-expense-btn:hover:not(:disabled) {
+  background: #262626;
+  border-color: #262626;
+}
+
+.add-expense-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.undo-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #0a0a0a;
+  font-size: 0.875rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-family: 'Geist Mono', monospace;
+  background: #ffffff;
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #0a0a0a;
+  box-shadow: 0 0 0 2px rgba(10, 10, 10, 0.1);
+}
+
+.expense-list {
+  background: #fafafa;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.expense-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #e5e5e5;
+  background: #ffffff;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+}
+
+.expense-item:last-child {
+  margin-bottom: 0;
+}
+
+.expense-details {
+  flex: 1;
+}
+
+.expense-description {
+  font-weight: 500;
+  color: #0a0a0a;
+  margin: 0 0 0.5rem 0;
+  font-size: 0.875rem;
+}
+
+.expense-meta {
+  font-size: 0.75rem;
+  color: #525252;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  font-family: 'Geist Mono', monospace;
+}
+
+.expense-amount {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0a0a0a;
+  font-family: 'Geist Mono', monospace;
+}
+
+.expense-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.day-total {
+  background: #0a0a0a;
+  color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.day-total h2 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: 'Geist Mono', monospace;
+}
+
+.day-total .amount {
+  font-size: 2rem;
+  font-weight: 600;
+  font-family: 'Geist Mono', monospace;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: #525252;
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.875rem;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #525252;
+}
+
+.empty-state h3 {
+  margin: 0 0 0.5rem 0;
+  color: #0a0a0a;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.category-tag {
+  background: #e5e5e5;
+  color: #0a0a0a;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  font-family: 'Geist Mono', monospace;
+}
+
+.tags {
+  display: flex;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+}
+
+.tag {
+  background: #f5f5f5;
+  color: #525252;
+  padding: 0.125rem 0.375rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-family: 'Geist Mono', monospace;
+}
+
+/* Login View Styles */
+.login-view {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: #ffffff;
+}
+
+.login-container {
+  width: 100%;
+  max-width: 400px;
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.login-header h1 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin: 0 0 0.5rem 0;
+  color: #0a0a0a;
+}
+
+.login-header p {
+  color: #525252;
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+.login-form {
+  background: #fafafa;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 2rem;
+}
+
+.login-form h2 {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.125rem;
+  font-weight: 500;
+  text-align: center;
+  color: #0a0a0a;
+}
+
+.login-button {
+  width: 100%;
+  padding: 0.875rem;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+.error-message {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  padding: 0.75rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  font-family: 'Geist Mono', monospace;
+}
+
+/* View Toggle Switch Styles */
+.view-toggle {
+  position: relative;
+  display: inline-flex;
+  background: #e5e5e5;
+  border-radius: 20px;
+  padding: 2px;
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.75rem;
+}
+
+.view-toggle input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.view-toggle-option {
+  position: relative;
+  padding: 0.375rem 0.75rem;
+  color: #525252;
+  font-weight: 500;
+  transition: color 0.2s ease;
+  cursor: pointer;
+  z-index: 2;
+  white-space: nowrap;
+  min-width: 65px;
+  text-align: center;
+  border-radius: 16px;
+}
+
+.view-toggle-slider {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  bottom: 2px;
+  right: 2px;
+  border-radius: 18px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.view-toggle-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 50%;
+  background: #0a0a0a;
+  border-radius: 16px;
+  transition: transform 0.2s ease;
+  transform: translateX(0);
+}
+
+.view-toggle input:nth-child(3):checked ~ .view-toggle-slider .view-toggle-indicator {
+  transform: translateX(100%);
+}
+
+.view-toggle input:checked + .view-toggle-option {
+  color: white;
+}
+
+.view-toggle input:not(:checked) + .view-toggle-option {
+  color: #525252;
+}
+
+/* Heatmap Styles */
+.heatmap-view {
+  padding: 1rem;
+}
+
+.heatmap-container {
+  background: #fafafa;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.heatmap-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.heatmap-header h2 {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 500;
+}
+
+.savings-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-top: 0.5rem;
+}
+
+.savings-amount {
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: 'Geist Mono', monospace;
+}
+
+.savings-amount.positive {
+  color: #16a34a;
+}
+
+.savings-amount.negative {
+  color: #dc2626;
+}
+
+.budget-info {
+  font-size: 0.75rem;
+  color: #525252;
+  font-family: 'Geist Mono', monospace;
+}
+
+.heatmap-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  max-width: 100%;
+}
+
+.heatmap-cell {
+  aspect-ratio: 1;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  position: relative;
+  min-width: 12px;
+  min-height: 12px;
+}
+
+.heatmap-cell:hover {
+  transform: scale(1.1);
+  z-index: 1;
+}
+
+.heatmap-cell.empty {
+  background: #f5f5f5;
+  border: 1px solid #e5e5e5;
+}
+
+.heatmap-cell.low {
+  background: #dcfce7;
+}
+
+.heatmap-cell.medium {
+  background: #86efac;
+}
+
+.heatmap-cell.high {
+  background: #22c55e;
+}
+
+.heatmap-cell.very-high {
+  background: #16a34a;
+}
+
+.heatmap-legend {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  font-size: 0.75rem;
+  color: #525252;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.legend-color {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0.5rem;
+  }
+  
+  .header {
+    padding: 1rem;
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .expense-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .expense-actions {
+    align-self: flex-end;
+  }
+
+  .login-view {
+    padding: 0.5rem;
+  }
+
+  .login-form {
+    padding: 1.5rem;
+  }
+
+  .auth-section {
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 1rem;
+    order: 2;
+  }
+
+  .header h1 {
+    order: 1;
+  }
+
+  .view-toggle {
+    order: 1;
+  }
+
+  .user-info {
+    max-width: 150px;
+    font-size: 0.75rem;
+  }
+
+  .simple-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .add-expense-btn,
+  .undo-btn {
+    width: 100%;
+  }
+
+  .heatmap-view {
+    padding: 0.5rem;
+  }
+
+  .heatmap-container {
+    padding: 1rem;
+  }
+
+  .heatmap-header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  .heatmap-cell {
+    min-width: 8px;
+    min-height: 8px;
+  }
+
+  .heatmap-legend {
+    flex-wrap: wrap;
+  }
+}
