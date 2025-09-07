@@ -6,6 +6,7 @@ import {
   deleteDoc,
   getDocs,
   getDoc,
+  setDoc,
   query,
   where,
   orderBy,
@@ -111,7 +112,7 @@ export const expenseService = {
         updatedAt: serverTimestamp(),
       });
     } else {
-      await updateDoc(dayRef, {
+      await setDoc(dayRef, {
         id: dayId,
         date,
         totalAmount: amountChange,
