@@ -73,13 +73,13 @@ export const useCreateExpense = () => {
 
       return { previousExpenses, previousTotal, expenseQueryKey, dayTotalQueryKey };
     },
-    onError: (err, newExpense, context) => {
+    onError: (_err, _newExpense, context) => {
       if (context) {
         queryClient.setQueryData(context.expenseQueryKey, context.previousExpenses);
         queryClient.setQueryData(context.dayTotalQueryKey, context.previousTotal);
       }
     },
-    onSettled: (data, error, variables) => {
+    onSettled: (_data, _error, variables) => {
       const dateStr = variables.date;
       queryClient.invalidateQueries({ queryKey: ['expenses', currentUser!.uid, dateStr] });
       queryClient.invalidateQueries({ queryKey: ['dayTotal', currentUser!.uid, dateStr] });
