@@ -1,3 +1,4 @@
+import { useRef, useEffect, useState } from 'react';
 import { DayTotal } from './DayTotal';
 import { useCreateExpense, useExpensesByDate, useDeleteExpense } from '../hooks/useExpenses';
 import { formatDate } from '../utils/date';
@@ -10,15 +11,49 @@ export const ExpenseTracker = () => {
   const deleteExpenseMutation = useDeleteExpense();
   const { data: todayExpenses } = useExpensesByDate(today);
 
-  const handleAddExpense = () => {
-    createExpenseMutation.mutate({
-      amount: 10000, // ฿100 in cents (stored as multiples of 100)
-      description: 'Quick expense',
-      category: 'Other',
-      tags: [],
-      date: todayStr,
-    });
+  const tapCountRef = useRef(0);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [displayTapCount, setDisplayTapCount] = useState(0);
+
+  const executeCumulativeAdd = () => {
+    if (tapCountRef.current > 0) {
+      const cumulativeAmount = tapCountRef.current * 10000;
+      createExpenseMutation.mutate({
+        amount: cumulativeAmount,
+        description: tapCountRef.current === 1 ? 'Quick expense' : `Quick expense (×${tapCountRef.current})`,
+        category: 'Other',
+        tags: [],
+        date: todayStr,
+      });
+      tapCountRef.current = 0;
+      setDisplayTapCount(0);
+    }
   };
+
+  const handleAddExpense = () => {
+    tapCountRef.current += 1;
+    setDisplayTapCount(tapCountRef.current);
+    
+    // Clear existing timeout
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    
+    // Set new timeout for 1 second
+    timeoutRef.current = setTimeout(() => {
+      executeCumulativeAdd();
+      timeoutRef.current = null;
+    }, 1000);
+  };
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
 
   const handleUndo = () => {
     if (todayExpenses && todayExpenses.length > 0) {
@@ -30,6 +65,18 @@ export const ExpenseTracker = () => {
 
   const canUndo = todayExpenses && todayExpenses.length > 0;
 
+  const getButtonText = () => {
+    if (createExpenseMutation.isPending) {
+      const amount = displayTapCount * 100;
+      return displayTapCount > 1 ? `Adding ฿${amount}...` : 'Adding...';
+    }
+    if (displayTapCount > 1) {
+      const amount = displayTapCount * 100;
+      return `Add ฿${amount} (${displayTapCount})`;
+    }
+    return 'Add ฿100';
+  };
+
   return (
     <div className="expense-tracker">
       <DayTotal date={today} />
@@ -40,7 +87,7 @@ export const ExpenseTracker = () => {
           onClick={handleAddExpense}
           disabled={createExpenseMutation.isPending}
         >
-          {createExpenseMutation.isPending ? 'Adding...' : 'Add ฿100'}
+          {getButtonText()}
         </button>
         
         <button
