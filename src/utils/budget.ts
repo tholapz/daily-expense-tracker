@@ -3,8 +3,9 @@
  * @returns Daily budget in cents (multiply by 100 for storage)
  */
 export const getDailyBudget = (): number => {
-  const budgetEnv = import.meta.env.DAILY_BUDGET;
-  const defaultBudget = 2000; // ฿2000 default
+  const budgetEnv = import.meta.env.VITE_DAILY_BUDGET;
+  const defaultBudget = 1800; // ฿1800 default
+
   
   if (!budgetEnv) {
     return defaultBudget * 100; // Convert to cents
