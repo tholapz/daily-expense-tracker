@@ -3,7 +3,7 @@
  * @returns Daily budget in cents (multiply by 100 for storage)
  */
 export const getDailyBudget = (): number => {
-  const budgetEnv = import.meta.env.VITE_DAILY_BUDGET;
+  const budgetEnv = import.meta.env.DAILY_BUDGET;
   const defaultBudget = 2000; // ฿2000 default
   
   if (!budgetEnv) {
@@ -12,7 +12,7 @@ export const getDailyBudget = (): number => {
   
   const parsedBudget = parseFloat(budgetEnv);
   if (isNaN(parsedBudget) || parsedBudget <= 0) {
-    console.warn(`Invalid VITE_DAILY_BUDGET value: "${budgetEnv}". Using default: ฿${defaultBudget}`);
+    console.warn(`Invalid DAILY_BUDGET value: "${budgetEnv}". Using default: ฿${defaultBudget}`);
     return defaultBudget * 100;
   }
   

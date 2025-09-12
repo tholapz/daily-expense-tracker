@@ -41,7 +41,12 @@ Add these in **GitHub Repository Settings > Secrets and Variables > Actions**:
 | `VITE_FIREBASE_STORAGE_BUCKET` | Firebase Storage Bucket | `your-project.firebasestorage.app` |
 | `VITE_FIREBASE_MESSAGING_SENDER_ID` | Firebase Messaging Sender ID | `1234567890` |
 | `VITE_FIREBASE_APP_ID` | Firebase App ID | `1:123:web:abc123` |
-| `VITE_DAILY_BUDGET` | Daily budget amount in THB | `2000` |
+
+### Firebase Environment Variables
+Add these in **GitHub Repository Settings > Secrets and Variables
+
+| Variable Name | Description | Example Value |
+| `DAILY_BUDGET` | Daily budget amount in THB | `1800` |
 
 ### Firebase Service Account
 1. **Generate Service Account Key:**
