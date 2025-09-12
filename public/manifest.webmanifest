@@ -1,7 +1,8 @@
 {
   "name": "Daily Expense Tracker",
   "short_name": "Expense",
-"start_url": "https://daily-expense-tracker-73693.web.app/",
+  "start_url": "https://daily-expense-tracker-73693.web.app/",
+  "version": "1.0",
   "scope": "/",
   "display": "standalone",
   "background_color": "#ffffff",
