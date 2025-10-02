@@ -4,7 +4,7 @@
  */
 export const getDailyBudget = (): number => {
   const budgetEnv = import.meta.env.DAILY_BUDGET;
-  const defaultBudget = 1800; // ฿1800 default
+  const defaultBudget = 2300; // ฿2300 default
 
   
   if (!budgetEnv) {

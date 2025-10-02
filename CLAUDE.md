@@ -59,7 +59,7 @@ Environment variables prefixed with `VITE_*` for client exposure:
 - `VITE_FIREBASE_APP_ID` - Firebase app ID
 
 **Application Variables:**
-- `DAILY_BUDGET` - Daily budget in THB (default: 1800)
+- `DAILY_BUDGET` - Daily budget in THB (default: 2300)
 
 ## Firebase Configuration
 

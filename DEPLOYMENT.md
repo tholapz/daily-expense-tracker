@@ -46,7 +46,7 @@ Add these in **GitHub Repository Settings > Secrets and Variables > Actions**:
 Add these in **GitHub Repository Settings > Secrets and Variables
 
 | Variable Name | Description | Example Value |
-| `DAILY_BUDGET` | Daily budget amount in THB | `1800` |
+| `DAILY_BUDGET` | Daily budget amount in THB | `2300` |
 
 ### Firebase Service Account
 1. **Generate Service Account Key:**
