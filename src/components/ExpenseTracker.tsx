@@ -56,6 +56,18 @@ export const ExpenseTracker = () => {
   }, []);
 
   const handleUndo = () => {
+    // First priority: cancel pending cumulative add if exists
+    if (tapCountRef.current > 0) {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
+      tapCountRef.current = 0;
+      setDisplayTapCount(0);
+      return;
+    }
+
+    // Second priority: delete most recent expense if exists
     if (todayExpenses && todayExpenses.length > 0) {
       // Get the most recent expense (first in array since they're sorted by newest first)
       const mostRecentExpense = todayExpenses[0];
@@ -63,7 +75,7 @@ export const ExpenseTracker = () => {
     }
   };
 
-  const canUndo = todayExpenses && todayExpenses.length > 0;
+  const canUndo = displayTapCount > 0 || (todayExpenses && todayExpenses.length > 0);
 
   const getButtonText = () => {
     if (createExpenseMutation.isPending) {
